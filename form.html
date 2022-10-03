@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 задание</title>
+</head>
+<!-- 3. * Создать форму обратной связи с полями: Имя, Телефон, E-mail, текст, кнопка Отправить.
+При нажатии на кнопку Отправить произвести валидацию полей следующим образом:
+a. Имя содержит только буквы.
+b. Телефон имеет вид +7(000)000-0000.
+c. E-mail имеет вид mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru.
+d. Текст произвольный.
+e. Если одно из полей не прошло валидацию, необходимо выделить это поле красной рамкой
+и сообщить пользователю об ошибке. -->
+
+<body>
+
+    <form name="regform" onsubmit="return formValidation(event)" class="form-box">
+        <fieldset>
+            <legend>3 задание</legend>
+
+            <p><label for="name">Введите имя</label><input type="text" name="name">
+                <span class="error-text form_area"></span>
+            </p>
+
+            <p><label for="phone">Введите телефон</label><input type="phone" name="telephone" onclick="this.value=''">
+                <span class="error-text form_area"></span>
+            </p>
+
+            <p><label for="email">Введите e-mail</label><input type="email" name="email">
+                <span class="error-text form_area"></span>
+            </p>
+            <p><label for="text">Произвольный текст</label><textarea name="text" rows="7"></textarea></p>
+        </fieldset>
+        <p>
+            <input class="submit-btn" type="submit" value="Отправить" name="submitButton">
+        </p>
+    </form>
+
+
+    <style>
+        form {
+            width: 400px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        form p {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .error-text {
+            margin-top: 5px;
+            color: red
+        }
+
+        .form-box .error-input,
+        .form-box .p_error {
+            border-color: red;
+            color: red;
+        }
+    </style>
+
+
+    <script>
+        "use strict";
+
+        const form = document.forms.regform;
+        const spanErrorText = document.getElementsByClassName('error-text');
+        const inputArea = document.getElementsByClassName('form_area');
+
+        //очистка всех текстов с ошибками
+        const clearErrorText = () => {
+            for (let n = 0; n < spanErrorText.length; n++) {
+                spanErrorText[n].innerText = ' ';
+            }
+        };
+
+        //очистка красной рамки в input с ошибками
+        const clearInputArea = () => {
+            for (let n = 0; n < inputArea.length; n++) {
+                let classList = inputArea[n].classList;
+                console.log(classList);
+
+                if (classList.contains('form_area') === true) {
+                    classList.remove('form_area');
+                    classList.remove('p_error');
+                }
+            }
+        };
+
+        //валидация формы 
+        const formValidation = function (e) {
+            e.preventDefault();
+            // console.log('Run validation');
+
+            clearErrorText(); //очистка ВСЕХ текстов с ошибками
+            clearInputArea(); //очистка красной рамки в input с ошибками
+
+            let name = form.elements.name;
+            let telephone = form.elements.telephone;
+            let mail = form.elements.email;
+
+            let result = true;
+
+            if (nameValidation(name) == false) {
+                result = false;
+            }
+
+            if (telephoneValidation(telephone) == false) {
+                result = false;
+            }
+
+            if (mailValidation(mail) == false) {
+                result = false;
+            }
+
+            return result;
+        };
+
+
+        //ИМЯ валидация 
+        const nameValidation = (name) => {
+            console.log('funcNameValid');
+
+            let regexp = /^[A-Za-zА-Яа-я ]+$/;
+
+            if (name.value == '') {
+                spanErrorText[0].innerText = 'Заполните поле!';
+                return false;
+            }
+            if (name.value.match(regexp)) {
+                return true;
+            } else {
+                spanErrorText[0].innerText = 'Имя может содержать только буквы';
+                name.classList.add('form_area');
+                name.classList.add('p_error');
+                name.focus();
+                return false;
+            }
+        };
+
+
+        //telephone валидация 
+        const telephoneValidation = (telephone) => {
+            console.log('funcPhoneValid');
+
+            let regexp = /^\+\d{1}\(\d{3}\)\d{3}-\d{4}$/;
+
+            if (telephone.value == '' || telephone.value == '+7(000)000-0000') {
+                spanErrorText[1].innerText = 'Заполните поле!';
+                return false;
+            }
+
+            if (telephone.value.match(regexp)) {
+                return true;
+            } else {
+                spanErrorText[1].innerText = 'Введите телефон в формате +7(000)000-0000';
+                telephone.classList.add('form_area');
+                telephone.classList.add('p_error');
+                telephone.focus();
+                return false;
+            }
+        };
+
+
+        //Mail валидация 
+        const mailValidation = (mail) => {
+            // console.log('funcMailValid');
+
+            let regexp = /^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$/;
+
+            if (mail.value == '') {
+                spanErrorText[2].innerText = 'Заполните поле!';
+                return false;
+            }
+            if (mail.value.match(regexp)) {
+                return true;
+            } else {
+                spanErrorText[2].innerText = 'Неверный формат';
+                mail.classList.add('form_area');
+                mail.classList.add('p_error');
+                mail.focus();
+                return false;
+            }
+        };
+
+    </script>
+
+</body>
+
+</html>

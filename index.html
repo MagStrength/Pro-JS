@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 и 2 задание</title>
+</head>
+
+<body>
+    <section>
+        <!-- 1. Дан большой текст, в котором для оформления прямой речи используются одинарные
+        кавычки. Придумать шаблон, который заменяет одинарные кавычки на двойные -->
+        <!-- 2. Улучшить шаблон так, чтобы в конструкциях типа aren't одинарная кавычка 
+        не заменялась на двойную. -->
+
+
+        <p class="text">
+            Jerry: 'Let's go for a walk.'
+            Lima: 'Have you got any ideas where we can go?'
+            Jerry: 'Yes, I have. Let's go to the restaurant.'
+            Lima: 'Ok. Let's go.'
+            Waiter: 'Good evening. What can I do for you? What would you like to order?'
+            Jerry: 'Have you got mashed potatoes?'
+            Waiter: 'Yes, we have.'
+            Jerry: 'Have you got any juice?'
+            Waiter: 'Apple juice, tomato juice and orange juice.'
+            Jerry: 'Give us orange juice, please. Have you got any ice-cream?'
+            Waiter: 'Yes, we have vanilla ice-cream, chocolate ice-cream and ice-cream with topping.'
+            Jerry: 'Give us one vanilla ice-cream and one chocolate ice-cream.'
+            W: 'Anything else?'
+            Jerry: 'That's all. Thank you.'
+        </p>
+        <button class="btn-quotes">Изменить кавычки</button>
+        <button class="btn-quotes2">Улучшить шаблон</button>
+
+        <style>
+            p {
+                white-space: pre;
+            }
+        </style>
+
+        <script>
+            "use strict";
+            //1
+            document.querySelector('.btn-quotes').addEventListener('click', () => {
+                let text = document.querySelector('.text');
+                let newText = text.textContent.replace(/'/gi, '"');
+                text.textContent = newText;
+            });
+
+            //2
+            document.querySelector('.btn-quotes2').addEventListener('click', () => {
+                let text = document.querySelector('.text');
+                let newText = text.textContent.replace(/'/gi, '"');
+                newText = newText.replace(/\b"\b/gi, "'");
+                text.textContent = newText;
+            });
+
+        </script>
+    </section>
+</body>
+
+</html>
