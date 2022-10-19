@@ -1,0 +1,20 @@
+{
+    "amount": 46600,
+    "countGoods": 2,
+    "contents": [
+        {
+            "quantity": 2,
+            "id_product": 457,
+            "product_name": "Netbook",
+            "price": 3000,
+            "img": "img/netbook.jpg"
+        },
+        {
+            "quantity": 1,
+            "id_product": 124,
+            "product_name": "Keyboard",
+            "price": 1600,
+            "img": "img/keyboard.jpg"
+        }
+    ]
+}
